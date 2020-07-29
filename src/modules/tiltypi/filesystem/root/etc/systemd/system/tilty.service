@@ -1,0 +1,12 @@
+[Unit]
+Description=A pluggable system to receive and transmit bluetooth events from the Tilt Hydrometer
+After=network.online.target
+Wants=network.online.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/home/pi/tilty/bin/tilty -r --config-file=/etc/tilty.ini
+
+[Install]
+WantedBy=multi-user.target
