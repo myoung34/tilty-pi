@@ -1,9 +1,9 @@
 name: Build Image
 
-on: 
+on:
   push:
-  schedule: 
-    - cron: '0 0 * * *'
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -53,8 +53,23 @@ jobs:
 
         echo "::set-output name=image::$IMAGE"
 
-    # artifact upload will take care of zipping for us
-    - uses: actions/upload-artifact@v1
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: ${{ steps.copy.outputs.image }}
-        path: ${{ steps.copy.outputs.image }}.img
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_name: ${{ steps.copy.outputs.image }}
+        asset_path: ${{ steps.copy.outputs.image }}.img
