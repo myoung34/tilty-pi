@@ -73,3 +73,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_name: ${{ steps.copy.outputs.image }}
         asset_path: ${{ steps.copy.outputs.image }}.img
+        asset_content_type: octetstream
