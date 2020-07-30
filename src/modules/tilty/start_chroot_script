@@ -25,25 +25,18 @@ echo "removing:" $remove_extra
 apt-get remove -y --purge  $remove_extra
 apt-get autoremove -y
 
-apt-get -y --force-yes install libbluetooth-dev python3 python3-virtualenv python3-dev git screen subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev
+apt-get -y --force-yes install libbluetooth-dev python3 python3-virtualenv python3-dev git screen subversion cmake checkinstall avahi-daemon libavahi-compat-libdnssd1 libffi-dev libssl-dev curl wget procps lsof
 
 echo " - Reinstall iputils-ping"
 apt-get install --reinstall iputils-ping
 
 pushd /home/pi
 
+  # Tilty
   # build virtualenv
   sudo -u pi python3 -m virtualenv --python=python3 tilty
   sudo -u pi /home/pi/tilty/bin/pip install --upgrade pip
-
-  # Tilty & pyserial
-  if [ "$TILTYPI_INCLUDE_TILTY" == "yes" ]
-  then
-    echo "--- Installing Tilty"
-
-    # Tilty
-    PIP_DEFAULT_TIMEOUT=60 sudo -u pi /home/pi/tilty/bin/pip install tilty
-  fi
+  PIP_DEFAULT_TIMEOUT=60 sudo -u pi /home/pi/tilty/bin/pip install tilty
 popd
 
 # store tiltypi commit used to build this image
@@ -61,8 +54,6 @@ echo "pi ALL=NOPASSWD: /usr/sbin/service" > /etc/sudoers.d/tilty-service
 sed -i "s@secure_path=\"@secure_path=\"/root/bin:@g" /etc/sudoers
 chmod +x /root/bin/git
 
-# add some "How To" info to boot output
-# Note, this code is also in /filesystem/home/pi/scripts/
 sed -i 's@exit 0@@' /etc/rc.local
 cat <<'EOT' >> /etc/rc.local
 echo
@@ -81,6 +72,7 @@ unpack /filesystem/root /
 
 #####################################################################
 ### setup services
+systemctl_if_exists enable tilty.service
 
 ### Disable GUI at start
 systemctl_if_exists disable lightdm.service || true
@@ -88,17 +80,14 @@ systemctl_if_exists disable lightdm.service || true
 update-rc.d change_password defaults
 update-rc.d change_hostname defaults
 
+### TILTpi
 
-### Tilty
+curl -sL https://raw.githubusercontent.com/baronbrew/raspbian-deb-package/master/resources/update-nodejs-and-nodered | sed 's/NODERED_HOME=.HOME/NODERED_HOME=\/home\/pi/g'  >update-nodejs-and-nodered
+yes | sudo -u pi -H bash update-nodejs-and-nodered
 
-if [ "$TILTYPI_INCLUDE_TILTY" == "yes" ]
-then
-  systemctl_if_exists enable tilty.service
-else
-  # let's remove the configs for system services we don't need
-  rm /etc/systemd/system/tilty.service
-fi
+npm config set unsafe-perm true
+npm install node-red-dashboard@2.9.7 -g
+npm install node-red-dashboard@2.15.5 -g
 
-#cleanup
-apt-get clean
-apt-get autoremove -y
+curl -sL https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/nodered.service >/etc/systemd/system/nodered.service
+systemctl_if_exists enable nodered.service || true

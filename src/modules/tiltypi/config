@@ -1,2 +1,0 @@
-[ -n "$TILTYPI_INCLUDE_TILTY" ] || TILTYPI_INCLUDE_TILTY=yes
-[ -n "$TILTYPI_COMMIT" ] || TILTYPI_COMMIT=`pushd "${DIST_PATH}" > /dev/null ; git rev-parse HEAD ; popd > /dev/null`

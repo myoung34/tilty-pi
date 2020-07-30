@@ -2,8 +2,8 @@ name: Build Image
 
 on:
   push:
-    tags:
-      - '*'
+    branches-ignore:
+      - 'refs/tags/*'
 
 jobs:
   build:
@@ -35,6 +35,11 @@ jobs:
       run: |
         cd repository/src
         ../../CustomPiOS/src/update-custompios-paths
+
+    - name: Get Latest TILTpi flow.json
+      run: |
+        cd repository/src/modules/tilty/filesystem/home/pi
+        curl -sL https://raw.githubusercontent.com/baronbrew/TILTpi/Aioblescan/flow.json > flow.json
     
     - name: Build Image
       run: |
@@ -53,24 +58,7 @@ jobs:
 
         echo "::set-output name=image::$IMAGE"
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/upload-artifact@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_name: ${{ steps.copy.outputs.image }}.img
-        asset_path: ${{ steps.copy.outputs.image }}.img
-        asset_content_type: octetstream
+        name: ${{ steps.copy.outputs.image }}
+        path: ${{ steps.copy.outputs.image }}.img
