@@ -5,8 +5,8 @@ Wants=network.online.target
 
 [Service]
 Type=simple
-User=pi
-ExecStart=/home/pi/tilty/bin/tilty -r --config-file=/etc/tilty.ini
+User=root
+ExecStart=/usr/local/bin/tilty -r --config-file=/etc/tilty/tilty.ini
 
 [Install]
 WantedBy=multi-user.target
