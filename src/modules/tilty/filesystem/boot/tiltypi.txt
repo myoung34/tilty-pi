@@ -14,8 +14,3 @@
 # Defaults to auto
 #
 #camera="auto"
-
-### Tilty/TILTpi Specific directives
-tilt_color="red"
-tilt_email="foo@gmail.com"
-tilt_beer_name="test"

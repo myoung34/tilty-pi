@@ -36,11 +36,6 @@ jobs:
         cd repository/src
         ../../CustomPiOS/src/update-custompios-paths
 
-    - name: Get Latest TILTpi flow.json
-      run: |
-        cd repository/src/modules/tilty/filesystem/root/etc/tilty/
-        curl -sL https://raw.githubusercontent.com/baronbrew/TILTpi/Aioblescan/flow.json >flow.json
-    
     - name: Build Image
       run: |
         sudo modprobe loop
