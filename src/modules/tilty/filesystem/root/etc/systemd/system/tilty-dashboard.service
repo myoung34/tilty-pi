@@ -1,0 +1,14 @@
+[Unit]
+Description=A live dashboard for the tilty based on Flask-SocketIO
+
+After=tilty.service
+Wants=tilty.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/lib/python3.7/dist-packages
+ExecStart=/usr/local/bin/gunicorn --worker-class eventlet -w 1 -c /etc/tilty/gunicorn.py tilty_dashboard:app
+
+[Install]
+WantedBy=multi-user.target

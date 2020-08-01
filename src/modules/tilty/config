@@ -1,1 +1,2 @@
 [ -n "$TILTYPI_COMMIT" ] || export TILTYPI_COMMIT=`pushd "${DIST_PATH}" > /dev/null ; git rev-parse HEAD ; popd > /dev/null`
+[ -n "$TILT_DASHBOARD_ARCHIVE" ] || TILT_DASHBOARD_ARCHIVE=$(curl -s https://api.github.com/repos/myoung34/tilt-dashboard/releases/latest | grep "zipball_url" | sed 's/.*\(https.*\)",/\1/g')
