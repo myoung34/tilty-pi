@@ -37,13 +37,13 @@ cat <<EOF >/etc/tilty/prod.config
 [webapp]
   host=0.0.0.0
   port=5000
-  database_uri="sqlite:////etc/tilty/tilty.sqlite"
+  database_uri="sqlite:////etc/tilty/tilt.sqlite"
 EOF
 cat <<EOF >/etc/tilty/prod.configspec
 [webapp]
   host=string(default=127.0.0.1)
   port=string(default=5000)
-  database_uri=string(default="sqlite:////etc/tilty/tilty.sqlite")
+  database_uri=string(default="sqlite:////etc/tilty/tilt.sqlite")
 EOF
 curl -sL https://raw.githubusercontent.com/myoung34/tilty-dashboard/master/config/prod_gunicorn.py >/etc/tilty/gunicorn.py
 
