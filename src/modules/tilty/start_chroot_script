@@ -46,7 +46,6 @@ cat <<EOF >/etc/tilty/prod.configspec
   database_uri=string(default="sqlite:////etc/tilty/tilty.sqlite")
 EOF
 curl -sL https://raw.githubusercontent.com/myoung34/tilty-dashboard/master/config/prod_gunicorn.py >/etc/tilty/gunicorn.py
-touch /etc/tilty/tilty.sqlite
 
 # store tiltypi commit used to build this image
 echo "$TILTYPI_COMMIT" > /etc/tiltypi_commit
@@ -68,21 +67,11 @@ cat <<'EOT' >> /etc/rc.local
 echo
 echo "------------------------------------------------------------"
 echo
-echo "Test "
+echo "Welcome to the Tilty-Pi! "
+echo " TODO: point to docs and/or webpage"
 echo 
 echo "------------------------------------------------------------"
 echo
-[ ! -f /etc/tilty/.bootstrapped ] && (
-  echo;
-  echo "------------------------------------------------------------";
-  echo;
-  echo "Attempting initial bootstrap";
-  echo; 
-  echo "------------------------------------------------------------";
-  echo;
-  cp /boot/tilty.ini /etc/tilty/ &&
-  touch /etc/tilty/.bootstrapped
-)
 EOT
 
 echo 'exit 0' >> /etc/rc.local
