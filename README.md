@@ -9,7 +9,7 @@ A [Raspberry Pi](http://www.raspberrypi.org/) distribution for [Tilt Hydrometers
 
 ## Installation ##
 
-Grab a recent [release](https://github.com/myoung34/tilty-dashboard/releases)
+Grab a recent [release](https://github.com/myoung34/tilty-pi/releases)
 
   1. Unzip the image and install it to an sd card [like any other Raspberry Pi image](https://www.raspberrypi.org/documentation/installation/installing-images/README.md>)
   1. . Configure your WiFi by editing `tiltypi-wpa-supplicant.txt` on the root of the flashed card when using it like a thumb drive
