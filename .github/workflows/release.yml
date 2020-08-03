@@ -2,8 +2,8 @@ name: Build Image
 
 on:
   push:
-    branches-ignore:
-      - 'refs/tags/*'
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
 
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/tags/})"
       id: extract_branch
 
     - name: Download Raspbian Image
@@ -57,7 +57,28 @@ jobs:
 
         echo "::set-output name=image::$IMAGE"
 
-    - uses: actions/upload-artifact@v1
+    - uses: montudor/action-zip@v0.1.0
       with:
-        name: ${{ steps.copy.outputs.image }}
-        path: ${{ steps.copy.outputs.image }}.img
+        args: zip -qq tiltypi-${{ steps.extract_branch.outputs.branch }}.zip tiltypi-${{ steps.extract_branch.outputs.branch }}.img
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_name: ${{ steps.copy.outputs.image }}.zip
+        asset_path: ${{ steps.copy.outputs.image }}.zip
+        asset_content_type: octetstream

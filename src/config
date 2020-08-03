@@ -1,3 +1,2 @@
 export DIST_NAME=TiltyPi
-export DIST_VERSION=0.0.1
 export MODULES="base(raspicam, network, disable-services(tilty), password-for-sudo)"
