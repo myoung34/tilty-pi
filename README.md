@@ -5,7 +5,7 @@ Tilty Pi
 
 A [Raspberry Pi](http://www.raspberrypi.org/) distribution for [Tilt Hydrometers](https://tilthydrometer.com/)
 
-![](https://cdn.zappy.app/859c7a44c7cf2bc04e427b037c5c5372.png)
+![](https://raw.githubusercontent.com/myoung34/tilty-dashboard/master/images/dash.gif)
 
 ## Installation ##
 
