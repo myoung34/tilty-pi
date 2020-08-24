@@ -54,7 +54,7 @@ echo
 echo "--- Installing desktop packages"
 echo
 
-apt-get install --yes raspberrypi-ui-mods
+apt-get install --yes raspberrypi-ui-mods midori
 
 if [ "$x_on_boot" == "yes" ]
 then
@@ -62,6 +62,15 @@ then
   echo "--- Setting up Pi to boot to desktop"
   echo
   systemctl set-default graphical.target
+  sed -i.bak 's/#\? \?autologin-user \?=.*/autologin-user=pi/g' /etc/lightdm/lightdm.conf
+  cat <<EOF >/etc/xdg/lxsession/LXDE-pi/autostart
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xset s off
+@xset -dpms
+@xset s noblank
+@/home/pi/scripts/kiosk.sh
+EOF
 else
   echo
   echo "--- Setting up Pi to not boot to desktop"
