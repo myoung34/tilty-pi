@@ -4,6 +4,7 @@ After=network.online.target
 Wants=network.online.target
 
 [Service]
+ExecStartPre=/bin/sleep 30
 Type=simple
 User=root
 ExecStart=/usr/local/bin/tilty -r --config-file=/etc/tilty/tilty.ini

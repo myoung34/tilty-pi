@@ -71,6 +71,12 @@ echo " TODO: point to docs and/or webpage"
 echo 
 echo "------------------------------------------------------------"
 echo
+if [ ! -f /etc/tilty/tilty.ini ]; then
+  if [ -f /boot/tilty.ini ]; then
+    echo "Setting up config from /boot/tilty.ini to /etc/tilty/tilty.ini"
+    mv /boot/tilty.ini /etc/tilty/tilty.ini
+  fi
+fi
 EOT
 
 echo 'exit 0' >> /etc/rc.local
