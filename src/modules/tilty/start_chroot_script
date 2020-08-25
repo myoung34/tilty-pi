@@ -87,6 +87,8 @@ unpack /filesystem/root /
 ### setup services
 systemctl_if_exists enable tilty.service
 systemctl_if_exists enable tilty-dashboard.service
+systemctl_if_exists enable tilty-watcher.service
+systemctl_if_exists enable tilty-watcher.path
 
 ### Disable GUI at start
 systemctl_if_exists disable lightdm.service || true

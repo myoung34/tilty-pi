@@ -1,0 +1,6 @@
+[Path]
+Unit=tilty-watcher.service
+PathChanged=/etc/tilty/tilty.ini
+
+[Install]
+WantedBy=multi-user.target
