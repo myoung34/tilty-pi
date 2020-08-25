@@ -1,0 +1,12 @@
+[Unit]
+Description=tilty restarter
+After=network.target
+StartLimitIntervalSec=30
+StartLimitBurst=1
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl restart tilty.service
+
+[Install]
+WantedBy=multi-user.target
