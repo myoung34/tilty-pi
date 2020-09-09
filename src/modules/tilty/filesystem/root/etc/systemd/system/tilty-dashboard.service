@@ -5,6 +5,7 @@ After=tilty.service
 Wants=tilty.service
 
 [Service]
+Environment=LOG_FILE=/var/log/tilty.log
 Type=simple
 User=root
 WorkingDirectory=/usr/local/lib/python3.7/dist-packages
