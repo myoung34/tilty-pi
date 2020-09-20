@@ -12,12 +12,11 @@ A [Raspberry Pi](http://www.raspberrypi.org/) distribution for [Tilt Hydrometers
 Grab a recent [release](https://github.com/myoung34/tilty-pi/releases)
 
   1. Unzip the image and install it to an sd card [like any other Raspberry Pi image](https://www.raspberrypi.org/documentation/installation/installing-images/README.md>)
-  1. . Configure your WiFi by editing `tiltypi-wpa-supplicant.txt` on the root of the flashed card when using it like a thumb drive
-  1. . Boot the Pi from the card
-  1. . Log into your Pi via SSH (it is located the IP address assigned by your router), default username is "pi", default password is "raspberry". Run ``sudo raspi-config``. Once that is open:
-   1. Change the password via "Change User Password"
-   1. Optionally: Change the configured timezone via "Localization Options" > "Timezone".
-   1. Optionally: Change the hostname via "Network Options" > "Hostname".
+  1. Configure your WiFi by editing `tiltypi-wpa-supplicant.txt` on the root of the flashed card when using it like a thumb drive
+  1. (Optional) Configure your configuration by editing [tilty.ini](https://github.com/myoung34/tilty-pi/blob/master/src/modules/tilty/filesystem/boot/tilty.ini)
+  1. Boot the Pi from the card. The default ssh username is `pi` and the default password is `raspberry`
+
+**Note** It is recommended to change the ssh password via `raspi-config`.
   
 TiltyPi will be located at `http://ipaddress:5000`
 
