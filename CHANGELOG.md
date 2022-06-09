@@ -1,3 +1,10 @@
+## 0.0.16
+
+Bundles:
+
+ * tilty 0.12.0: [changelog](https://github.com/myoung34/tilty/blob/master/CHANGELOG)
+ * tilty-dashboard 1.2.0: [changelog](https://github.com/myoung34/tilty-dashboard/blob/master/CHANGELOG)
+
 ## 0.0.15
 
 Bundles:
